@@ -1,0 +1,181 @@
+/* styles.css */
+
+/* --- 1. VARIÁVEIS GERAIS (O Painel de Controle) --- */
+:root {
+    /* Paleta de Cores "Ateliê Elegante" */
+    --bg-color: #fdfbf7; /* Um creme bem suave */
+    --text-primary: #4a4a4a; /* Cinza chumbo elegante */
+    --text-secondary: #7c7c7c;
+    --accent-gold: #c5a47e; /* Tom de ouro envelhecido/cobre */
+    --accent-pink: #e0a8b3; /* Um rosa chá suave */
+    
+    /* Cores das Redes (Mantemos as originais ou adaptamos) */
+    --whatsapp-color: #25D366;
+    --instagram-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    
+    /* Sombras */
+    --shadow-soft: 0 8px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 12px 25px rgba(197, 164, 126, 0.25); /* Sombra com cor do tema */
+}
+
+/* --- 2. RESET E BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* No seu print 2, você usou uma imagem de fundo. 
+       Vamos usar uma cor sólida com um "padrão" sutil por cima, se quiser. */
+    background-color: var(--bg-color);
+    /* Opcional: adicionar uma textura de linho bem sutil */
+    /* background-image: url('textura-linho-transparente.png'); */
+    color: var(--text-primary);
+    font-family: 'Lato', sans-serif; /* Fonte limpa para o corpo */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 420px; /* Um pouco mais estreito para ficar elegante */
+    text-align: center;
+    /* Animação de entrada (veremos no JS) */
+    opacity: 0; 
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+/* Classe que o JS vai adicionar para mostrar o container */
+.container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- 3. PERFIL --- */
+.profile-header {
+    margin-bottom: 35px;
+}
+
+.img-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    /* CORREÇÃO DO SEU CSS (Img 2): Borda mais elegante */
+    border: 4px solid var(--bg-color); /* Borda interna da cor do fundo */
+    /* Efeito de "ponto de costura" com box-shadow duplo */
+    box-shadow: 
+        0 0 0 3px var(--accent-gold), /* Primeira linha dourada */
+        0 10px 20px rgba(0,0,0,0.15); /* Sombra de profundidade */
+}
+
+h1 {
+    font-family: 'Playfair Display', serif; /* Fonte elegante para o nome */
+    font-size: 2rem;
+    color: var(--text-primary);
+    display: inline-block; /* Para ficar ao lado do coração */
+}
+
+.heart-icon {
+    font-size: 1.5rem;
+    animation: pulse 2s infinite ease-in-out; /* Animação fofa */
+}
+
+.bio {
+    color: var(--text-secondary);
+    margin-top: 10px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* --- 4. BOTÕES (A correção técnica importante) --- */
+.link-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os botões */
+    width: 100%;
+}
+
+/*
+  CORREÇÃO TÉCNICA NOS SEUS PRINTS (Img 2 vs Img 4):
+  Você tinha estilos conflitantes no 'a' e no '.btn-link'.
+  Vamos centralizar tudo no '.btn-link'.
+*/
+.btn-link {
+    display: flex; /* Flex é essencial para alinhar ícone e texto */
+    align-items: center;
+    /* Truque para centralizar o texto, mas manter o ícone na esquerda: */
+    justify-content: center; 
+    position: relative; /* Necessário para o ícone absoluto */
+    
+    padding: 16px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 50px; /* Borda bem redonda, mais moderna */
+    color: white;
+    background-color: var(--text-primary); /* Cor padrão se falhar */
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transição elástica */
+    overflow: hidden; /* Para efeitos de brilho */
+}
+
+/* Ícone posicionado absolutamente para não empurrar o texto */
+.btn-link i {
+    position: absolute;
+    left: 20px;
+    font-size: 1.3rem;
+}
+
+/* Estilos Específicos */
+.btn-instagram {
+    background: var(--instagram-grad);
+}
+
+.btn-whatsapp {
+    background-color: var(--whatsapp-color);
+}
+
+/* --- 5. HOVER EFFECTS (Fluidez) --- */
+.btn-link:hover {
+    transform: translateY(-5px) scale(1.02); /* Sobe e cresce um pouquinho */
+    box-shadow: var(--shadow-hover);
+}
+
+/* Efeito de "Brilho Passando" (Glow effect) */
+.glow-on-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transition: all 0.6s;
+}
+
+.glow-on-hover:hover::before {
+    left: 100%; /* O brilho atravessa o botão */
+}
+
+/* --- 6. ANIMAÇÕES --- */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
